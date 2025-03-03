@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOBI-COMM Admin Dashboard - Plans</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Poppins Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+
+    <!-- Noui Slider -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nouislider@14.7.0/distribute/nouislider.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../CSS/Admin_Plans-page.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <img src="Logo-removebg-preview.png" alt="Mobi-Comm Logo" class="logo">
+                <nav aria-label="breadcrumb" class="ms-4 d-none d-md-block">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Plans</li>
+                    </ol>
+                </nav>
+            </div>
+
+            <div class="profile-section">
+                <span class="welcome-text d-none d-lg-inline">Welcome Admin!</span>
+                <div class="notification-icon me-3 position-relative">
+                    <i class="bi bi-bell-fill"></i>
+                    <span class="notification-badge">3</span>
+                </div>
+                <div class="profile-icon dropdown">
+                    <a class="dropdown-toggle" href="#" role="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person-fill"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#profileModal"><i class="bi bi-person me-2"></i>Profile</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                    </ul>
+                </div>
+                <div class="mode-toggle ms-3">
+                    <i class="bi bi-sun-fill" id="lightModeIcon"></i>
+                    <i class="bi bi-moon-fill d-none" id="darkModeIcon"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <div class="content-wrapper">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="Admin_Home-page.html"><i class="bi bi-house-door me-2"></i>Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Admin_Subscribers-page.html"><i class="bi bi-people me-2"></i>Subscribers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="Admin_Plans-page.html"><i class="bi bi-grid-3x3-gap me-2"></i>Plans</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Admin_Report-page.html"><i class="bi bi-bar-chart me-2"></i>Reports</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Admin_Feedback-page.html"><i class="bi bi-chat-left-text me-2"></i>Feedback</a>
+                    </li>
+                </ul>
+                <div class="sidebar-bottom">
+                    <div class="theme-toggle">
+                        <span>Auto Dark Mode</span>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="autoThemeSwitch" checked>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <div class="container-fluid">
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <h1 class="page-title">Plans Management</h1>
+                    </div>
+                </div>
+
+                <!-- Search and Filter Section -->
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        <div class="card search-filter-card">
+                            <div class="card-body">
+                                <div class="row g-3">
+                                    <!-- Search Box -->
+                                    <div class="col-lg-3 col-md-6">
+                                        <div class="search-container">
+                                            <i class="bi bi-search search-icon"></i>
+                                            <input type="text" class="form-control search-input" id="planSearch" placeholder="Search plans...">
+                                            <div id="searchSuggestions" class="search-suggestions d-none">
+                                                <!-- Suggestions will be dynamically populated -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Category Filter -->
+                                    <div class="col-lg-2 col-md-6">
+                                        <select class="form-select" id="categoryFilter">
+                                            <option value="">All Categories</option>
+                                            <!-- Categories will be dynamically populated -->
+                                        </select>
+                                    </div>
+
+                                    <!-- Data Per Day Filter -->
+                                    <div class="col-lg-2 col-md-6">
+                                        <select class="form-select" id="dataFilter">
+                                            <option value="">All Data Plans</option>
+                                            <option value="1GB">1GB Per Day</option>
+                                            <option value="2GB">2GB Per Day</option>
+                                            <option value="Unlimited">Unlimited</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Validity Filter -->
+                                    <div class="col-lg-2 col-md-6">
+                                        <select class="form-select" id="validityFilter">
+                                            <option value="">All Validity</option>
+                                            <option value="28">28 Days</option>
+                                            <option value="30">30 Days</option>
+                                            <option value="60">60 Days</option>
+                                            <option value="90">90 Days</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Price Range Filter -->
+                                    <div class="col-lg-3 col-md-12">
+                                        <label for="priceRangeSlider" class="form-label">Price Range: <span id="priceRangeValue">₹0 - ₹1000</span></label>
+                                        <div id="priceRangeSlider" class="price-slider"></div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col-12 d-flex justify-content-between">
+                                        <div>
+                                            <button class="btn btn-primary me-2" id="applyFilters">
+                                                <i class="bi bi-funnel me-1"></i> Apply Filters
+                                            </button>
+                                            <button class="btn btn-outline-secondary" id="clearFilters">
+                                                <i class="bi bi-x-circle me-1"></i> Clear Filters
+                                            </button>
+                                        </div>
+                                        <div>
+                                            <button class="btn btn-success" id="addCategoryBtn" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+                                                <i class="bi bi-folder-plus me-1"></i> Add Plan Category
+                                            </button>
+                                            <button class="btn btn-danger ms-2 d-none" id="bulkDeleteBtn">
+                                                <i class="bi bi-trash me-1"></i> Delete Selected
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Plan Cards Section -->
+                <div class="plans-container mb-4" id="plansContainer">
+                    <!-- Plan categories and cards will be dynamically populated here -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer" style="color: white; background-color: #476147;">
+        <div class="container">
+            <p class="mb-0">Powered by Mobi-Comm</p>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <!-- Profile Modal -->
+    <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="profileModalLabel">Admin Profile</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="profileForm">
+                        <div class="mb-3 text-center">
+                            <div class="profile-avatar">
+                                <i class="bi bi-person-circle"></i>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-outline-primary mt-2">Change Photo</button>
+                        </div>
+                        <div class="mb-3">
+                            <label for="adminName" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="adminName" value="Admin User">
+                        </div>
+                        <div class="mb-3">
+                            <label for="adminEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="adminEmail" value="admin@mobicomm.com">
+                        </div>
+                        <div class="mb-3">
+                            <label for="adminRole" class="form-label">Role</label>
+                            <input type="text" class="form-control" id="adminRole" value="System Administrator" disabled>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Category Modal -->
+<div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addCategoryModalLabel">Add New Category</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="categoryForm">
+                    <div class="mb-3">
+                        <label for="categoryName" class="form-label">Category Name</label>
+                        <input type="text" class="form-control" id="categoryName" required>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="is5GCategory">
+                        <label class="form-check-label" for="is5GCategory">Is 5G Category</label>
+                    </div>
+                    
+                    <hr>
+                    <h6>Initial Plan (Required)</h6>
+                    <div id="initialPlanSection">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="initialPlanName" class="form-label">Plan Name</label>
+                                <input type="text" class="form-control" id="initialPlanName" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="initialPlanPrice" class="form-label">Price (₹)</label>
+                                <input type="number" class="form-control" id="initialPlanPrice" min="0" step="0.01" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="initialPlanValidity" class="form-label">Validity (Days)</label>
+                                <input type="number" class="form-control" id="initialPlanValidity" min="1" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="initialDataPerDay" class="form-label">Data Per Day</label>
+                                <select class="form-select" id="initialDataPerDay">
+                                    <option value="0.5GB">0.5GB</option>
+                                    <option value="1GB">1GB</option>
+                                    <option value="1.5GB">1.5GB</option>
+                                    <option value="2GB">2GB</option>
+                                    <option value="3GB">3GB</option>
+                                    <option value="Unlimited">Unlimited</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="initialVoiceCalls" class="form-label">Voice Calls</label>
+                                <select class="form-select" id="initialVoiceCalls">
+                                    <option value="">None</option>
+                                    <option value="100 mins">100 mins</option>
+                                    <option value="300 mins">300 mins</option>
+                                    <option value="500 mins">500 mins</option>
+                                    <option value="Unlimited">Unlimited</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="initialMessages" class="form-label">Messages</label>
+                                <select class="form-select" id="initialMessages">
+                                    <option value="">None</option>
+                                    <option value="100 SMS">100 SMS</option>
+                                    <option value="200 SMS">200 SMS</option>
+                                    <option value="Unlimited">Unlimited</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="initialOTTsEnabled">
+                            <label class="form-check-label" for="initialOTTsEnabled">Include OTT Subscriptions</label>
+                        </div>
+                        <div class="mb-3 initial-ott-options d-none">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input initial-ott-checkbox" id="initialNetflix" value="Netflix">
+                                <label class="form-check-label" for="initialNetflix">Netflix</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input initial-ott-checkbox" id="initialPrime" value="Prime">
+                                <label class="form-check-label" for="initialPrime">Prime</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input initial-ott-checkbox" id="initialHulu" value="Hulu">
+                                <label class="form-check-label" for="initialHulu">Hulu</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input initial-ott-checkbox" id="initialHotstar" value="Hotstar">
+                                <label class="form-check-label" for="initialHotstar">Hotstar</label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="saveCategoryBtn">Save Category</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Add Plan Modal -->
+    <div class="modal fade" id="addPlanModal" tabindex="-1" aria-labelledby="addPlanModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addPlanModalLabel">Add New Plan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="planForm">
+                        <input type="hidden" id="planId">
+                        <input type="hidden" id="planCategory">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="planName" class="form-label">Plan Name</label>
+                                <input type="text" class="form-control" id="planName" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="planPrice" class="form-label">Price (₹)</label>
+                                <input type="number" step="0.01" class="form-control" id="planPrice" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="planValidity" class="form-label">Validity (Days)</label>
+                                <input type="number" class="form-control" id="planValidity" required>
+                            </div>
+                            <div class="col-md-6 mb-3 plan-data-field">
+                                <label for="planDataPerDay" class="form-label">Data Per Day</label>
+                                <select class="form-control" id="planDataPerDay">
+                                    <option value="0.5GB">0.5GB</option>
+                                    <option value="1GB">1GB</option>
+                                    <option value="1.5GB">1.5GB</option>
+                                    <option value="2GB">2GB</option>
+                                    <option value="3GB">3GB</option>
+                                    <option value="Unlimited">Unlimited</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3 plan-voice-field d-none">
+                                <label for="planVoiceCalls" class="form-label">Voice Calls</label>
+                                <select class="form-control" id="planVoiceCalls">
+                                    <option value="Unlimited">Unlimited</option>
+                                    <option value="100 mins">100 mins</option>
+                                    <option value="200 mins">200 mins</option>
+                                    <option value="300 mins">300 mins</option>
+                                </select>notificationBadge
+                            </div>
+                            <div class="col-md-6 mb-3 plan-messages-field d-none">
+                                <label for="planMessages" class="form-label">Messages</label>
+                                <select class="form-control" id="planMessages">
+                                    <option value="100 SMS">100 SMS</option>
+                                    <option value="200 SMS">200 SMS</option>
+                                    <option value="Unlimited">Unlimited</option>
+                                </select>
+                            </div>
+                            <div class="col-12 mb-3 plan-ott-field d-none">
+                                <label class="form-label">OTT Platforms</label>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input plan-ott-checkbox" type="checkbox" id="planOttNetflix" value="Netflix">
+                                            <label class="form-check-label" for="planOttNetflix">Netflix</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input plan-ott-checkbox" type="checkbox" id="planOttPrime" value="Prime">
+                                            <label class="form-check-label" for="planOttPrime">Prime</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input plan-ott-checkbox" type="checkbox" id="planOttHulu" value="Hulu">
+                                            <label class="form-check-label" for="planOttHulu">Hulu</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input plan-ott-checkbox" type="checkbox" id="planOttHotstar" value="Hotstar">
+                                            <label class="form-check-label" for="planOttHotstar">Hotstar</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="savePlanBtn">Save Plan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteConfirmModalLabel">Confirm Delete</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="deleteConfirmText">Are you sure you want to delete this plan?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Noui Slider JS -->
+    <script src="https://cdn.jsdelivr.net/npm/nouislider@14.7.0/distribute/nouislider.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="../JS/Admin_Plans-page.js">
+        
+
+    
+    </script>
+</body>
+</html>

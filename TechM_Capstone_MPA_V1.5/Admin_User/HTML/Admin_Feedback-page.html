@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobi-comm Admin - Feedback Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../CSS/Admin_Feedback-page.css">
+</head>
+<body class="light-mode">
+    <!-- Header -->
+    <header class="header">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <img src="Logo-removebg-preview.png" alt="Mobi-Comm Logo" class="logo">
+                <!-- <nav aria-label="breadcrumb" class="ms-4 d-none d-md-block">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item active">Home</li>
+                    </ol>
+                </nav> -->
+            </div>
+
+            <div class="profile-section">
+                <span class="welcome-text d-none d-md-inline">Welcome <span id="adminName">Admin</span>!</span>
+                
+                <!-- Notification Icon -->
+                <div class="notification-icon position-relative me-3" id="notificationIcon">
+                    <i class="bi bi-bell-fill"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger notification-badge">
+                        0
+                    </span>
+                </div>
+                
+                <!-- Profile Icon with Dropdown -->
+                <div class="profile-icon dropdown">
+                    <i class="bi bi-person-fill" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                        <li><a class="dropdown-item" href="#" id="profileMenuItem"><i class="bi bi-person-circle me-2"></i>Profile</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+   <!-- Main Content -->
+<div class="content-wrapper">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <nav class="sidebar-nav">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" href="Admin_Home-page.html"><i class="bi bi-house-door me-2"></i>Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Admin_Subscribers-page.html"><i class="bi bi-people me-2"></i>Subscribers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="Admin_Plans-page.html"><i class="bi bi-grid-3x3-gap me-2"></i>Plans</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Admin_Report-page.html"><i class="bi bi-bar-chart me-2"></i>Reports</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="Admin_Feedback-page.html"><i class="bi bi-chat-left-text me-2"></i>Feedback <span class="badge bg-danger rounded-pill unread-count" id="unreadBadge">0</span></a>
+                    
+                </li>
+            </ul>
+            <div class="sidebar-bottom">
+                <div class="theme-toggle">
+                    <span>Auto Dark Mode</span>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="autoThemeSwitch" checked>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </aside>
+
+   
+    <!-- Main Content Area -->
+    <div class="main-content">
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Feedback</li>
+            </ol>
+        </nav>
+
+        <!-- Welcome Section
+        <div class="welcome-section d-flex justify-content-between align-items-center mb-4">
+            <h2>Feedback Management</h2>
+            <div class="admin-info">
+                <span class="welcome-message">Welcome <span id="adminName">Admin1</span>!</span>
+                <div class="notification-icon position-relative">
+                    <i class="bi bi-bell"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger notification-badge">0</span>
+                </div>
+            </div>
+        </div> -->
+
+        <!-- Feedback Tabs -->
+        <div class="feedback-tabs mb-4">
+            <ul class="nav nav-tabs" id="feedbackTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="unread-tab" data-bs-toggle="tab" data-bs-target="#unread" type="button" role="tab" aria-controls="unread" aria-selected="true">
+                        Unread Feedback <span class="badge bg-danger rounded-pill ms-2" id="unreadCount">0</span>
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="read-tab" data-bs-toggle="tab" data-bs-target="#read" type="button" role="tab" aria-controls="read" aria-selected="false">
+                        Read Feedback <span class="badge bg-secondary rounded-pill ms-2" id="readCount">0</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Feedback Content -->
+        <div class="tab-content" id="feedbackTabContent">
+            <!-- Unread Feedback Tab -->
+            <div class="tab-pane fade show active" id="unread" role="tabpanel" aria-labelledby="unread-tab">
+                <div class="feedback-container" id="unreadFeedbackContainer">
+                    <!-- Unread feedback cards will be dynamically inserted here -->
+                    <div class="no-feedback-message text-center p-5" id="noUnreadMessage">
+                        <i class="bi bi-envelope-check fs-1 text-muted"></i>
+                        <p class="mt-3">No unread feedback available</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Read Feedback Tab -->
+            <div class="tab-pane fade" id="read" role="tabpanel" aria-labelledby="read-tab">
+                <div class="feedback-container" id="readFeedbackContainer">
+                    <!-- Read feedback cards will be dynamically inserted here -->
+                    <div class="no-feedback-message text-center p-5" id="noReadMessage">
+                        <i class="bi bi-envelope fs-1 text-muted"></i>
+                        <p class="mt-3">No read feedback available</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Reply Modal -->
+<div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="replyModalLabel">Reply to Feedback</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="feedback-details mb-4">
+                    <div class="subscriber-info mb-2">
+                        <strong>From:</strong> <span id="modalSubscriberName"></span>
+                    </div>
+                    <div class="feedback-message p-3 bg-light rounded">
+                        <p id="modalFeedbackMessage"></p>
+                        <small class="text-muted" id="modalFeedbackTime"></small>
+                    </div>
+                </div>
+                <form id="replyForm">
+                    <div class="mb-3">
+                        <label class="form-label">Reply Method</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="replyMethod" id="emailReply" value="email" checked>
+                            <label class="form-check-label" for="emailReply">
+                                <i class="bi bi-envelope"></i> Email
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="replyMethod" id="smsReply" value="sms">
+                            <label class="form-check-label" for="smsReply">
+                                <i class="bi bi-chat"></i> SMS
+                            </label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="replyMessage" class="form-label">Your Reply</label>
+                        <textarea class="form-control" id="replyMessage" rows="5" required></textarea>
+                        <div class="invalid-feedback">Please enter your reply message.</div>
+                    </div>
+                    <input type="hidden" id="feedbackId" value="">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="sendReplyBtn">Send Reply</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Confirmation Toast -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="confirmationToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <i class="bi bi-check-circle-fill me-2 text-success"></i>
+            <strong class="me-auto">Success</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" id="toastMessage">
+            Reply sent successfully!
+        </div>
+    </div>
+</div>
+    <!-- Footer -->
+    <footer class="footer" style="color: white; background-color: #476147; z-index: 1000;">
+        <div class="container">
+            <p class="mb-0">Powered by Mobi-Comm</p>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../JS/Admin_Feedback-page.js"></script>
+</body>
+</html>

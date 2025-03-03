@@ -1,0 +1,491 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: #f5f5f5;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #fff;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo {
+    height: 50px;
+}
+
+.company-name {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.menu div {
+    display: inline-block;
+    padding: 10px 20px;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #4D4D4D;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.menu div:hover {
+    background-color: #476147;
+}
+
+.menu div:hover a {
+    color: white;
+}
+
+.login-btn {
+    padding: 10px 20px;
+    background: #476147;
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+    background: #333;
+}
+
+/* Hero Section */
+.hero {
+    width: 100%;
+    height: 80vh;
+    background: url('annual-plan.webp') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 10%;
+}
+
+.hero-content {
+    max-width: 500px;
+    color: #4D4D4D;
+}
+
+.hero-content h1 {
+    font-size: 44px;
+    font-weight: 600;
+}
+
+.hero-content p {
+    font-size: 16px;
+    color: #717171;
+    margin: 10px 0 20px;
+}
+
+.hero-content .btn {
+    padding: 10px 20px;
+    background: #476147;
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+/* Quick Recharge Section */
+.main-quick-recharge-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    background: linear-gradient(135deg, #f8f8f8, #e0e0e0, #c8c8c8);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.main-quick-recharge-container:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px);
+}
+
+/* Recharge container with responsive improvements */
+.quick-recharge-container {
+    flex: 2;
+    max-width: 600px;
+    padding: 40px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .quick-recharge-container {
+        flex: 1 0 100%;
+        max-width: 100%;
+        padding: 25px;
+    }
+    
+    .main-quick-recharge-container {
+        flex-direction: column;
+    }
+}
+
+/* Title styling with modernized design */
+.quick-recharge-title {
+    background: linear-gradient(to right, #476147, #5a7a5a);
+    color: white;
+    font-size: 24px;
+    font-weight: 700;
+    padding: 18px;
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 25px;
+    box-shadow: 0 3px 8px rgba(71, 97, 71, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+}
+
+.quick-recharge-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background-color: #476147;
+    border-radius: 3px;
+}
+
+/* Card styling with enhanced depth and spacing */
+.recharge-card {
+    padding: 35px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.recharge-card:hover {
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+}
+
+/* Form input styling with improved visuals */
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-label {
+    display: block;
+    font-size: 16px;
+    color: #444;
+    font-weight: 500;
+    margin-bottom: 8px;
+    transition: all 0.2s ease;
+}
+
+.mobile-input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.mobile-input:focus {
+    outline: none;
+    border-color: #476147;
+    box-shadow: 0 0 0 3px rgba(71, 97, 71, 0.1), inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.mobile-input::placeholder {
+    color: #aaa;
+    font-style: italic;
+}
+
+/* Button styling with enhanced interactions */
+.recharge-button {
+    width: 100%;
+    background: linear-gradient(to right, #476147, #5a7a5a);
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 18px;
+    margin-top: 15px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(71, 97, 71, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.recharge-button:hover {
+    background: linear-gradient(to right, #3e5440, #4d684d);
+    box-shadow: 0 6px 12px rgba(71, 97, 71, 0.3);
+    transform: translateY(-2px);
+}
+
+.recharge-button:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 6px rgba(71, 97, 71, 0.2);
+}
+
+.recharge-button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%);
+    transform-origin: 50% 50%;
+}
+
+.recharge-button:active::after {
+    animation: ripple 0.6s ease-out;
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(0, 0);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(20, 20);
+        opacity: 0;
+    }
+}
+
+/* Note styling with improved readability */
+.note {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+    margin-top: 20px;
+    line-height: 1.5;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 6px;
+    border-left: 3px solid #476147;
+}
+
+/* Add Bootstrap compatibility class */
+.form-control {
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    appearance: none;
+    border-radius: 0.375rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.btn {
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    border-radius: 0.375rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #476147;
+    border-color: #476147;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #3d523d;
+    border-color: #394e39;
+}
+
+/* Add responsive image container */
+.quick-recharge-image-container {
+    flex: 1;
+    min-height: 300px;
+    background-position: center;
+    background-size: cover;
+    border-radius: 10px;
+    margin-left: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .quick-recharge-image-container {
+        flex: 1 0 100%;
+        margin-left: 0;
+        margin-top: 20px;
+        min-height: 200px;
+    }
+}
+
+
+/* Carousel Section */
+.carousel-container {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px auto;
+    overflow: hidden;
+}
+
+.carousel {
+    display: flex;
+    transition: transform 0.3s ease;
+}
+
+.carousel-item {
+    min-width: 300px;
+    background: white;
+    border-radius: 4px;
+    margin: 0 10px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.carousel-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.carousel-control.prev {
+    left: 10px;
+}
+
+.carousel-control.next {
+    right: 10px;
+}
+
+/* Explore Plans */
+.explore-plans {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.explore-btn {
+    background: #476147;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.explore-btn:hover {
+    background: #2d4731;
+}
+
+/* Footer */
+.footer {
+    background: #476147;
+    padding: 50px 0;
+    color: white;
+    text-align: center;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-around;
+    padding-bottom: 20px;
+}
+
+.footer-col h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.footer-col a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-links {
+    display: flex;
+    gap: 20px;
+}
+
+.footer-links a {
+    color: white;
+    text-decoration: none;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.social-icons a {
+    color: white;
+    font-size: 20px;
+    text-decoration: none;
+}

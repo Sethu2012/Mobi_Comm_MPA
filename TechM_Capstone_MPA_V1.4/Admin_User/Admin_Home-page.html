@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOBI-COMM Admin Dashboard</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Poppins Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+
+    <!-- Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="Admin_Home-page.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <img src="Logo-removebg-preview.png" alt="Mobi-Comm Logo" class="logo">
+                <!-- <nav aria-label="breadcrumb" class="ms-4 d-none d-md-block">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item active">Home</li>
+                    </ol>
+                </nav> -->
+            </div>
+
+            <div class="profile-section">
+                <span class="welcome-text d-none d-md-inline">Welcome <span id="adminName">Admin</span>!</span>
+                
+                <!-- Notification Icon -->
+                <div class="notification-icon position-relative me-3" id="notificationIcon">
+                    <i class="bi bi-bell-fill"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger notification-badge">
+                        0
+                    </span>
+                </div>
+                
+                <!-- Profile Icon with Dropdown -->
+                <div class="profile-icon dropdown">
+                    <i class="bi bi-person-fill" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                        <li><a class="dropdown-item" href="#" id="profileMenuItem"><i class="bi bi-person-circle me-2"></i>Profile</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <div class="content-wrapper">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="Admin_Home-page.html"><i class="bi bi-house-door me-2"></i>Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Admin_Subscribers-page.html"><i class="bi bi-people me-2"></i>Subscribers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="Admin_Plans-page.html"><i class="bi bi-grid-3x3-gap me-2"></i>Plans</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Admin_Report-page.html"><i class="bi bi-bar-chart me-2"></i>Reports</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Admin_Feedback-page.html"><i class="bi bi-chat-left-text me-2"></i>Feedback</a>
+                    </li>
+                </ul>
+                <div class="sidebar-bottom">
+                    <div class="theme-toggle">
+                        <span>Auto Dark Mode</span>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="autoThemeSwitch" checked>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Dashboard Content -->
+        <main class="main-content">
+            <div class="container-fluid">
+                <h2 class="section-title">Dashboard</h2>
+                
+                <!-- Expiring Plans Section -->
+                <section class="card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Plans Expiring Within 3 Days</h5>
+                        <span class="badge bg-warning text-dark" id="expiringCount">0</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Subscriber Name</th>
+                                        <th>Mobile Number</th>
+                                        <th>Plan Name</th>
+                                        <th>Expiry Date</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="expiringPlansTableBody">
+                                    <!-- Table rows will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pagination-container d-flex justify-content-center mt-3">
+                            <nav aria-label="Expiring plans pagination">
+                                <ul class="pagination" id="expiringPlansPagination">
+                                    <!-- Pagination will be populated by JavaScript -->
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Key Metrics Section (Bento Grid) -->
+                <section class="bento-grid">
+                    <!-- Subscriber Count Cards -->
+                    <div class="row mb-4">
+                        <div class="col-md-4 mb-3 mb-md-0">
+                            <div class="card metric-card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Total Subscribers</h5>
+                                    <div class="metric-value" id="totalSubscribers">0</div>
+                                    <div class="metric-icon bg-primary">
+                                        <i class="bi bi-people-fill"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3 mb-md-0">
+                            <div class="card metric-card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Active Subscribers</h5>
+                                    <div class="metric-value text-success" id="activeSubscribers">0</div>
+                                    <div class="metric-icon bg-success">
+                                        <i class="bi bi-person-check-fill"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card metric-card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Inactive Subscribers</h5>
+                                    <div class="metric-value text-danger" id="inactiveSubscribers">0</div>
+                                    <div class="metric-icon bg-danger">
+                                        <i class="bi bi-person-dash-fill"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Charts & Lists Row -->
+                    <div class="row mb-4">
+                        <!-- Location Pie Chart -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card chart-card h-100">
+                                <div class="card-header">
+                                    <h5 class="mb-0">Subscribers by Location</h5>
+                                </div>
+                                <div class="card-body d-flex align-items-center justify-content-center">
+                                    <canvas id="locationChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Plan Distribution Bar Chart -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card chart-card h-100">
+                                <div class="card-header">
+                                    <h5 class="mb-0">Subscribers per Plan</h5>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="planDistributionChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Additional Metrics Row -->
+                    <div class="row">
+                        <!-- Subscriber Growth Histogram -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card chart-card h-100">
+                                <div class="card-header">
+                                    <h5 class="mb-0">Subscriber Growth</h5>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="growthChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Unused Plans List -->
+                        <div class="col-lg-6 mb-4">
+                            <div class="card h-100">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h5 class="mb-0">Unused Plans</h5>
+                                    <span class="badge bg-secondary" id="unusedPlansCount">0</span>
+                                </div>
+                                <div class="card-body">
+                                    <ul class="list-group list-group-flush" id="unusedPlansList">
+                                        <!-- Will be populated by JavaScript -->
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Inactive Subscribers -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h5 class="mb-0">Inactive Subscribers (3+ months)</h5>
+                                    <span class="badge bg-danger" id="longInactiveCount">0</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Subscriber Name</th>
+                                                    <th>Mobile Number</th>
+                                                    <th>Last Active Date</th>
+                                                    <th>Location</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="inactiveSubscribersTableBody">
+                                                <!-- Will be populated by JavaScript -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer" style="color: white; background-color: #476147; z-index: 1000;">
+        <div class="container">
+            <p class="mb-0">Powered by Mobi-Comm</p>
+        </div>
+    </footer>
+
+    <!-- Modal for Subscriber Details -->
+    <div class="modal fade" id="subscriberDetailsModal" tabindex="-1" aria-labelledby="subscriberDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="subscriberDetailsModalLabel">Subscriber Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="subscriberDetailsBody">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Notification -->
+    <div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="notificationModalLabel">Send Notification</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="notificationForm">
+                        <div class="mb-3">
+                            <label for="subscriberName" class="form-label">Subscriber</label>
+                            <input type="text" class="form-control" id="subscriberName" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="notificationMessage" class="form-label">Message</label>
+                            <textarea class="form-control" id="notificationMessage" rows="4"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="sendNotificationBtn">Send Notification</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Block Confirmation -->
+    <div class="modal fade" id="blockConfirmationModal" tabindex="-1" aria-labelledby="blockConfirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="blockConfirmationModalLabel">Confirm Block</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to block <span id="blockSubscriberName">this subscriber</span>?</p>
+                    <div class="mb-3">
+                        <label for="blockReason" class="form-label">Reason for blocking</label>
+                        <textarea class="form-control" id="blockReason" rows="3" placeholder="Enter reason for blocking..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirmBlockBtn">Block Subscriber</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Location Details -->
+    <div class="modal fade" id="locationDetailsModal" tabindex="-1" aria-labelledby="locationDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="locationDetailsModalLabel">Location Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Location</th>
+                                    <th>Subscriber Count</th>
+                                    <th>Percentage</th>
+                                </tr>
+                            </thead>
+                            <tbody id="locationDetailsBody">
+                                <!-- Will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Edit Modal -->
+    <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="profileModalLabel">Profile Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="profileForm">
+                        <div class="mb-3">
+                            <label for="profileName" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="profileName">
+                        </div>
+                        <div class="mb-3">
+                            <label for="profileEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="profileEmail">
+                        </div>
+                        <div class="mb-3">
+                            <label for="profileRole" class="form-label">Role</label>
+                            <input type="text" class="form-control" id="profileRole" readonly>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-success" id="saveProfileBtn">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="actionToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <i class="bi bi-check-circle-fill me-2 text-success"></i>
+                <strong class="me-auto" id="toastTitle">Success</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" id="toastMessage">
+                Action completed successfully.
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script>
+       // Data
+    const admins = [
+        {
+            admin_id: 1,
+            name: "Admin1",
+            email: "admin1@example.com",
+            password: "hashed_password",
+            role: "Super Admin",
+            created_at: "2025-02-26T10:00:00Z"
+        }
+    ];
+
+    // Subscribers
+    let subscribers = [
+        {
+            subscriber_id: 1,
+            name: "John Doe",
+            email: "john@example.com",
+            mobile_number: "9876543210",
+            status: "Active",
+            location: "New York",
+            plan_id: 2,
+            expires_on: "2025-03-01",
+            created_at: "2024-12-10T12:00:00Z"
+        },
+        {
+            subscriber_id: 2,
+            name: "Jane Smith",
+            email: "jane@example.com",
+            mobile_number: "8765432109",
+            status: "Active",
+            location: "Los Angeles",
+            plan_id: 1,
+            expires_on: "2025-02-28",
+            created_at: "2025-01-05T14:30:00Z"
+        },
+        {
+            subscriber_id: 3,
+            name: "David Lee",
+            email: "david@example.com",
+            mobile_number: "7654321098",
+            status: "Inactive",
+            location: "Chicago",
+            plan_id: 3,
+            expires_on: "2025-03-15",
+            created_at: "2024-11-20T11:15:00Z"
+        },
+        {
+            subscriber_id: 4,
+            name: "Emily Wilson",
+            email: "emily@example.com",
+            mobile_number: "6543210987",
+            status: "Active",
+            location: "Houston",
+            plan_id: 2,
+            expires_on: "2025-03-10",
+            created_at: "2025-02-01T09:00:00Z"
+        },
+        {
+            subscriber_id: 5,
+            name: "Michael Brown",
+            email: "michael@example.com",
+            mobile_number: "5432109876",
+            status: "Active",
+            location: "Phoenix",
+            plan_id: 1,
+            expires_on: "2025-03-05",
+            created_at: "2024-10-15T16:45:00Z"
+        }
+    ];
+
+    // Plans
+    const plans = [
+        {
+            plan_id: 1,
+            category: "Data Add-on",
+            plan_name: "1GB Per Day",
+            price: 199.99,
+            validity: 28,
+            data_per_day: "1GB",
+            voice_calls: "Unlimited",
+            messages: "100 SMS",
+            OTTs: "Netflix, Prime",
+            created_at: "2024-10-01T09:30:00Z"
+        },
+        {
+            plan_id: 2,
+            category: "Standard",
+            plan_name: "Standard Plan",
+            price: 299.99,
+            validity: 30,
+            data_per_day: "2GB",
+            voice_calls: "Unlimited",
+            messages: "200 SMS",
+            OTTs: "Prime",
+            created_at: "2024-11-01T10:00:00Z"
+        },
+        {
+            plan_id: 3,
+            category: "Premium",
+            plan_name: "Premium Plan",
+            price: 399.99,
+            validity: 60,
+            data_per_day: "Unlimited",
+            voice_calls: "Unlimited",
+            messages: "Unlimited",
+            OTTs: "Netflix, Prime, Hulu",
+            created_at: "2024-12-01T11:30:00Z"
+        }
+    ];
+
+    // Transactions
+    const transactions = [
+        {
+            transaction_id: 1,
+            subscriber_id: 1,
+            plan_id: 2,
+            amount: 199.99,
+            transaction_date: "2025-02-20T15:00:00Z",
+            status: "Success"
+        },
+        {
+            transaction_id: 2,
+            subscriber_id: 2,
+            plan_id: 1,
+            amount: 299.99,
+            transaction_date: "2025-02-22T12:00:00Z",
+            status: "Success"
+        }
+    ];
+
+    // Feedback
+    const feedbacks = [
+        {
+            feedback_id: 1,
+            subscriber_id: 1,
+            message: "Great service!",
+            status: "Unread",
+            created_at: "2025-02-22T08:30:00Z"
+        },
+        {
+            feedback_id: 2,
+            subscriber_id: 2,
+            message: "Good value for money",
+            status: "Read",
+            created_at: "2025-02-23T16:45:00Z"
+        }
+    ];
+
+    // Blocked Subscribers
+    let blockedSubscribers = [
+        {
+            block_id: 1,
+            subscriber_id: 2,
+            blocked_reason: "Repeated non-payment",
+            blocked_at: "2025-01-15T11:00:00Z"
+        }
+    ];
+
+
+    
+
+    // Wait for the DOM to be fully loaded before executing JavaScript
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize admin data
+    initializeAdminData();
+    
+    // Initialize theme based on time of day
+    initializeTheme();
+    
+    // Load dashboard data
+    loadDashboardData();
+    
+    // Setup event listeners
+    setupEventListeners();
+    
+    // Initialize tooltips and popovers
+    initializeBootstrapComponents();
+});
+
+// Initialize admin data from the admin object
+function initializeAdminData() {
+    const admin = admins[0]; // Get first admin from the array
+    document.getElementById('adminName').textContent = admin.name;
+    
+    // Set profile data
+    document.getElementById('profileName').value = admin.name;
+    document.getElementById('profileEmail').value = admin.email;
+    document.getElementById('profileRole').value = admin.role;
+}
+
+// Initialize theme based on time of day
+function initializeTheme() {
+    const hour = new Date().getHours();
+    const isDarkHours = hour < 6 || hour >= 18; // Dark mode between 6 PM and 6 AM
+    
+    const themeSwitch = document.getElementById('themeSwitch');
+    themeSwitch.checked = isDarkHours;
+    
+    applyTheme(isDarkHours);
+    
+    // Set theme switch event listener
+    themeSwitch.addEventListener('change', function() {
+        applyTheme(this.checked);
+    });
+}
+
+// Apply theme to the document
+function applyTheme(isDark) {
+    document.body.classList.toggle('dark-theme', isDark);
+    document.body.classList.toggle('light-theme', !isDark);
+}
+
+// Load all dashboard data
+function loadDashboardData() {
+    // Load expiring plans
+    loadExpiringPlans();
+    
+    // Load subscriber metrics
+    loadSubscriberMetrics();
+    
+    // Initialize charts
+    initializeCharts();
+    
+    // Load unused plans
+    loadUnusedPlans();
+    
+    // Load inactive subscribers
+    loadInactiveSubscribers();
+}
+
+// Load expiring plans table
+function loadExpiringPlans() {
+    const expiringPlans = getExpiringPlans(3); // Get plans expiring within 3 days
+    const tableBody = document.getElementById('expiringPlansTableBody');
+    const badge = document.getElementById('expiringCount');
+    
+    // Update badge count
+    badge.textContent = expiringPlans.length;
+    
+    // Clear table body
+    tableBody.innerHTML = '';
+    
+    if (expiringPlans.length === 0) {
+        // Show no data message
+        const row = document.createElement('tr');
+        row.innerHTML = `<td colspan="6" class="text-center">No plans expiring within 3 days</td>`;
+        tableBody.appendChild(row);
+        return;
+    }
+    
+    // Populate table with expiring plans
+    expiringPlans.forEach(plan => {
+        const subscriber = subscribers.find(sub => sub.subscriber_id === plan.subscriber_id);
+        const planDetails = plans.find(p => p.plan_id === subscriber.plan_id);
+        
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${subscriber.name}</td>
+            <td>${subscriber.mobile_number}</td>
+            <td>${planDetails.plan_name}</td>
+            <td>${formatDate(subscriber.expires_on)}</td>
+            <td><span class="badge ${subscriber.status === 'Active' ? 'bg-success' : 'bg-danger'}">${subscriber.status}</span></td>
+            <td>
+                <button class="btn btn-sm btn-primary view-details" data-subscriber-id="${subscriber.subscriber_id}">
+                    <i class="bi bi-eye"></i>
+                </button>
+                <button class="btn btn-sm btn-warning notify-subscriber" data-subscriber-id="${subscriber.subscriber_id}">
+                    <i class="bi bi-bell"></i>
+                </button>
+                ${subscriber.status === 'Inactive' ? 
+                    `<button class="btn btn-sm btn-danger block-subscriber" data-subscriber-id="${subscriber.subscriber_id}">
+                        <i class="bi bi-slash-circle"></i>
+                    </button>` : ''}
+            </td>
+        `;
+        tableBody.appendChild(row);
+    });
+    
+    // Setup pagination for expiring plans
+    setupPagination(expiringPlans.length, 5, 'expiringPlansPagination');
+}
+
+// Get plans expiring within specified days
+function getExpiringPlans(days) {
+    const today = new Date();
+    const expiryThreshold = new Date();
+    expiryThreshold.setDate(today.getDate() + days);
+    
+    // Find subscribers with plans expiring within the threshold
+    return subscribers
+        .filter(subscriber => {
+            const expiryDate = new Date(subscriber.expires_on);
+            return expiryDate >= today && expiryDate <= expiryThreshold;
+        })
+        .map(subscriber => {
+            return {
+                subscriber_id: subscriber.subscriber_id,
+                expires_on: subscriber.expires_on
+            };
+        });
+}
+
+// Load subscriber metrics
+function loadSubscriberMetrics() {
+    const totalSubscribers = subscribers.length;
+    const activeSubscribers = subscribers.filter(sub => sub.status === 'Active').length;
+    const inactiveSubscribers = totalSubscribers - activeSubscribers;
+    
+    // Update metric displays
+    document.getElementById('totalSubscribers').textContent = totalSubscribers;
+    document.getElementById('activeSubscribers').textContent = activeSubscribers;
+    document.getElementById('inactiveSubscribers').textContent = inactiveSubscribers;
+}
+
+// Initialize all charts
+function initializeCharts() {
+    initializeLocationChart();
+    initializePlanDistributionChart();
+    initializeGrowthChart();
+}
+
+// Initialize location chart
+function initializeLocationChart() {
+    const locationData = getLocationData();
+    const ctx = document.getElementById('locationChart').getContext('2d');
+    
+    const locationChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: locationData.map(item => item.location),
+            datasets: [{
+                data: locationData.map(item => item.count),
+                backgroundColor: [
+                    '#4CAF50', '#2196F3', '#FFC107', '#E91E63', '#9C27B0', '#FF5722',
+                    '#009688', '#673AB7', '#FFEB3B', '#03A9F4', '#8BC34A', '#FF9800'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'right',
+                    labels: {
+                        boxWidth: 12
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const label = context.label || '';
+                            const value = context.raw || 0;
+                            const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                            const percentage = Math.round((value / total) * 100);
+                            return `${label}: ${value} (${percentage}%)`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+    
+    // Add click event to show location details
+    document.querySelector('.chart-card').addEventListener('click', function() {
+        showLocationDetails(locationData);
+    });
+}
+
+// Get subscriber location data
+function getLocationData() {
+    const locations = {};
+    
+    subscribers.forEach(subscriber => {
+        if (!locations[subscriber.location]) {
+            locations[subscriber.location] = 0;
+        }
+        locations[subscriber.location]++;
+    });
+    
+    return Object.keys(locations).map(location => {
+        return {
+            location: location,
+            count: locations[location]
+        };
+    });
+}
+
+// Show location details in modal
+function showLocationDetails(locationData) {
+    const total = locationData.reduce((sum, item) => sum + item.count, 0);
+    const modalBody = document.getElementById('locationDetailsBody');
+    
+    // Clear previous content
+    modalBody.innerHTML = '';
+    
+    // Add location data rows
+    locationData.forEach(item => {
+        const percentage = ((item.count / total) * 100).toFixed(2);
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${item.location}</td>
+            <td>${item.count}</td>
+            <td>${percentage}%</td>
+        `;
+        modalBody.appendChild(row);
+    });
+    
+    // Show modal
+    const modal = new bootstrap.Modal(document.getElementById('locationDetailsModal'));
+    modal.show();
+}
+
+// Initialize plan distribution chart
+function initializePlanDistributionChart() {
+    const planData = getPlanDistributionData();
+    const ctx = document.getElementById('planDistributionChart').getContext('2d');
+    
+    const planChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: planData.map(item => item.plan_name),
+            datasets: [{
+                label: 'Subscribers',
+                data: planData.map(item => item.count),
+                backgroundColor: '#476147',
+                borderColor: '#2e4a2e',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        precision: 0
+                    }
+                }
+            }
+        }
+    });
+}
+
+// Get plan distribution data
+function getPlanDistributionData() {
+    const planCounts = {};
+    
+    subscribers.forEach(subscriber => {
+        if (!planCounts[subscriber.plan_id]) {
+            planCounts[subscriber.plan_id] = 0;
+        }
+        planCounts[subscriber.plan_id]++;
+    });
+    
+    return plans.map(plan => {
+        return {
+            plan_id: plan.plan_id,
+            plan_name: plan.plan_name,
+            count: planCounts[plan.plan_id] || 0
+        };
+    });
+}
+
+// Initialize subscriber growth chart
+function initializeGrowthChart() {
+    const growthData = getGrowthData();
+    const ctx = document.getElementById('growthChart').getContext('2d');
+    
+    const growthChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: growthData.map(item => item.month),
+            datasets: [{
+                label: 'New Subscribers',
+                data: growthData.map(item => item.count),
+                fill: false,
+                borderColor: '#476147',
+                tension: 0.1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        precision: 0
+                    }
+                }
+            }
+        }
+    });
+}
+
+// Get growth data (monthly new subscribers)
+function getGrowthData() {
+    const months = {};
+    
+    subscribers.forEach(subscriber => {
+        const date = new Date(subscriber.created_at);
+        const monthYear = `${date.getMonth() + 1}/${date.getFullYear()}`;
+        
+        if (!months[monthYear]) {
+            months[monthYear] = 0;
+        }
+        months[monthYear]++;
+    });
+    
+    // Convert to array and sort by date
+    return Object.keys(months).map(month => {
+        return {
+            month: month,
+            count: months[month]
+        };
+    }).sort((a, b) => {
+        const [aMonth, aYear] = a.month.split('/');
+        const [bMonth, bYear] = b.month.split('/');
+        
+        if (aYear !== bYear) {
+            return aYear - bYear;
+        }
+        return aMonth - bMonth;
+    });
+}
+
+// Load unused plans
+function loadUnusedPlans() {
+    const unusedPlans = getUnusedPlans();
+    const unusedPlansList = document.getElementById('unusedPlansList');
+    const unusedPlansCount = document.getElementById('unusedPlansCount');
+    
+    // Update count badge
+    unusedPlansCount.textContent = unusedPlans.length;
+    
+    // Clear list
+    unusedPlansList.innerHTML = '';
+    
+    if (unusedPlans.length === 0) {
+        const listItem = document.createElement('li');
+        listItem.className = 'list-group-item';
+        listItem.textContent = 'No unused plans found';
+        unusedPlansList.appendChild(listItem);
+        return;
+    }
+    
+    // Add unused plans to list
+    unusedPlans.forEach(plan => {
+        const listItem = document.createElement('li');
+        listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
+        listItem.innerHTML = `
+            <div>
+                <strong>${plan.plan_name}</strong> - ${plan.category}
+                <div class="text-muted small">₹${plan.price} for ${plan.validity} days</div>
+            </div>
+            <button class="btn btn-sm btn-outline-danger delete-plan" data-plan-id="${plan.plan_id}">
+                <i class="bi bi-trash"></i>
+            </button>
+        `;
+        unusedPlansList.appendChild(listItem);
+    });
+}
+
+// Get unused plans (plans with no subscribers)
+function getUnusedPlans() {
+    const usedPlanIds = subscribers.map(sub => sub.plan_id);
+    return plans.filter(plan => !usedPlanIds.includes(plan.plan_id));
+}
+
+// Load inactive subscribers
+function loadInactiveSubscribers() {
+    const inactiveSubscribers = getLongInactiveSubscribers();
+    const tableBody = document.getElementById('inactiveSubscribersTableBody');
+    const inactiveCount = document.getElementById('longInactiveCount');
+    
+    // Update count badge
+    inactiveCount.textContent = inactiveSubscribers.length;
+    
+    // Clear table body
+    tableBody.innerHTML = '';
+    
+    if (inactiveSubscribers.length === 0) {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td colspan="5" class="text-center">No long-term inactive subscribers found</td>`;
+        tableBody.appendChild(row);
+        return;
+    }
+    
+    // Populate table with inactive subscribers
+    inactiveSubscribers.forEach(subscriber => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${subscriber.name}</td>
+            <td>${subscriber.mobile_number}</td>
+            <td>${calculateLastActiveDate(subscriber)}</td>
+            <td>${subscriber.location}</td>
+            <td>
+                <button class="btn btn-sm btn-primary view-details" data-subscriber-id="${subscriber.subscriber_id}">
+                    <i class="bi bi-eye"></i>
+                </button>
+                <button class="btn btn-sm btn-danger block-subscriber" data-subscriber-id="${subscriber.subscriber_id}">
+                    <i class="bi bi-slash-circle"></i>
+                </button>
+            </td>
+        `;
+        tableBody.appendChild(row);
+    });
+}
+
+// Get subscribers inactive for 3+ months
+function getLongInactiveSubscribers() {
+    const threeMonthsAgo = new Date();
+    threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
+    
+    return subscribers.filter(subscriber => {
+        return subscriber.status === 'Inactive' && new Date(subscriber.created_at) < threeMonthsAgo;
+    });
+}
+
+// Calculate last active date for display (mock function)
+function calculateLastActiveDate(subscriber) {
+    // For demo purposes, use created_at date minus 7 days as "last active date"
+    const lastActiveDate = new Date(subscriber.created_at);
+    lastActiveDate.setDate(lastActiveDate.getDate() - 7);
+    return formatDate(lastActiveDate);
+}
+
+// Setup pagination
+function setupPagination(totalItems, itemsPerPage, paginationId) {
+    const pageCount = Math.ceil(totalItems / itemsPerPage);
+    const pagination = document.getElementById(paginationId);
+    
+    // Clear pagination
+    pagination.innerHTML = '';
+    
+    if (pageCount <= 1) {
+        return;
+    }
+    
+    // Create previous button
+    const prevItem = document.createElement('li');
+    prevItem.className = 'page-item disabled';
+    prevItem.innerHTML = '<a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>';
+    pagination.appendChild(prevItem);
+    
+    // Create page buttons
+    for (let i = 1; i <= pageCount; i++) {
+        const pageItem = document.createElement('li');
+        pageItem.className = i === 1 ? 'page-item active' : 'page-item';
+        pageItem.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+        pagination.appendChild(pageItem);
+    }
+    
+    // Create next button
+    const nextItem = document.createElement('li');
+    nextItem.className = 'page-item';
+    nextItem.innerHTML = '<a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>';
+    pagination.appendChild(nextItem);
+    
+    // Add click event listeners for pagination
+    pagination.querySelectorAll('.page-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Handle pagination logic here
+            // For demo, just toggle active state
+            pagination.querySelectorAll('.page-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            if (this.innerHTML.includes('&laquo;') || this.innerHTML.includes('&raquo;')) {
+                // Handle next/prev
+                return;
+            }
+            
+            this.parentElement.classList.add('active');
+        });
+    });
+}
+
+// Setup all event listeners
+function setupEventListeners() {
+    // View details buttons
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.view-details')) {
+            const subscriberId = e.target.closest('.view-details').dataset.subscriberId;
+            showSubscriberDetails(subscriberId);
+        }
+    });
+    
+    // Notify subscriber buttons
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.notify-subscriber')) {
+            const subscriberId = e.target.closest('.notify-subscriber').dataset.subscriberId;
+            showNotificationForm(subscriberId);
+        }
+    });
+    
+    // Block subscriber buttons
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.block-subscriber')) {
+            const subscriberId = e.target.closest('.block-subscriber').dataset.subscriberId;
+            showBlockConfirmation(subscriberId);
+        }
+    });
+    
+    // Delete plan buttons
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.delete-plan')) {
+            const planId = e.target.closest('.delete-plan').dataset.planId;
+            deletePlan(planId);
+        }
+    });
+    
+    // Profile menu item
+    document.getElementById('profileMenuItem').addEventListener('click', function(e) {
+        e.preventDefault();
+        const profileModal = new bootstrap.Modal(document.getElementById('profileModal'));
+        profileModal.show();
+    });
+    
+    // Save profile button
+    document.getElementById('saveProfileBtn').addEventListener('click', function() {
+        saveProfileChanges();
+    });
+    
+    // Send notification button
+    document.getElementById('sendNotificationBtn').addEventListener('click', function() {
+        sendNotification();
+    });
+    
+    // Confirm block button
+    document.getElementById('confirmBlockBtn').addEventListener('click', function() {
+        blockSubscriber();
+    });
+    
+    // Notification icon click
+    document.getElementById('notificationIcon').addEventListener('click', function() {
+        // Toggle notification dropdown or show notification list
+        // For demo purposes, we'll just show a toast
+        showToast('Notifications', 'You have no new notifications');
+    });
+}
+
+// Show subscriber details modal
+function showSubscriberDetails(subscriberId) {
+    const subscriber = subscribers.find(sub => sub.subscriber_id == subscriberId);
+    const planDetails = plans.find(plan => plan.plan_id === subscriber.plan_id);
+    
+    const modalTitle = document.getElementById('subscriberDetailsModalLabel');
+    const modalBody = document.getElementById('subscriberDetailsBody');
+    
+    modalTitle.textContent = `Subscriber: ${subscriber.name}`;
+    
+    modalBody.innerHTML = `
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <p><strong>ID:</strong> ${subscriber.subscriber_id}</p>
+                <p><strong>Name:</strong> ${subscriber.name}</p>
+                <p><strong>Email:</strong> ${subscriber.email}</p>
+                <p><strong>Mobile:</strong> ${subscriber.mobile_number}</p>
+            </div>
+            <div class="col-md-6">
+                <p><strong>Status:</strong> <span class="badge ${subscriber.status === 'Active' ? 'bg-success' : 'bg-danger'}">${subscriber.status}</span></p>
+                <p><strong>Location:</strong> ${subscriber.location}</p>
+                <p><strong>Created:</strong> ${formatDate(subscriber.created_at)}</p>
+                <p><strong>Plan Expires:</strong> ${formatDate(subscriber.expires_on)}</p>
+            </div>
+        </div>
+        <div class="plan-details">
+            <h6>Plan Details</h6>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">${planDetails.plan_name} <span class="badge bg-primary">${planDetails.category}</span></h5>
+                    <p class="card-text">Price: ₹${planDetails.price} | Validity: ${planDetails.validity} days</p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Data:</strong> ${planDetails.data_per_day}/day</p>
+                            <p><strong>Voice:</strong> ${planDetails.voice_calls}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>SMS:</strong> ${planDetails.messages}</p>
+                            <p><strong>OTT:</strong> ${planDetails.OTTs}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    const modal = new bootstrap.Modal(document.getElementById('subscriberDetailsModal'));
+    modal.show();
+}
+
+// Show notification form modal
+function showNotificationForm(subscriberId) {
+    const subscriber = subscribers.find(sub => sub.subscriber_id == subscriberId);
+    
+    document.getElementById('subscriberName').value = subscriber.name;
+    
+    // Suggest message text for plan expiry
+    document.getElementById('notificationMessage').value = `Dear ${subscriber.name}, your plan will expire on ${formatDate(subscriber.expires_on)}. Please renew to continue enjoying uninterrupted service.`;
+    
+    // Store subscriber ID for later use
+    document.getElementById('sendNotificationBtn').dataset.subscriberId = subscriberId;
+    
+    const modal = new bootstrap.Modal(document.getElementById('notificationModal'));
+    modal.show();
+}
+
+// Send notification (mock function)
+function sendNotification() {
+    const subscriberId = document.getElementById('sendNotificationBtn').dataset.subscriberId;
+    const message = document.getElementById('notificationMessage').value;
+    const subscriber = subscribers.find(sub => sub.subscriber_id == subscriberId);
+    
+    // In a real application, this would send the notification to the subscriber
+    console.log(`Sending notification to ${subscriber.name}: ${message}`);
+    
+    // Close modal
+    bootstrap.Modal.getInstance(document.getElementById('notificationModal')).hide();
+    
+    // Show success toast
+    showToast('Notification Sent', `Notification sent to ${subscriber.name} successfully`);
+}
+
+// Show block confirmation modal
+function showBlockConfirmation(subscriberId) {
+    const subscriber = subscribers.find(sub => sub.subscriber_id == subscriberId);
+    
+    document.getElementById('blockSubscriberName').textContent = subscriber.name;
+    document.getElementById('blockReason').value = '';
+    
+    // Store subscriber ID for later use
+    document.getElementById('confirmBlockBtn').dataset.subscriberId = subscriberId;
+    
+    const modal = new bootstrap.Modal(document.getElementById('blockConfirmationModal'));
+    modal.show();
+}
+
+// Block subscriber (mock function)
+function blockSubscriber() {
+    const subscriberId = parseInt(document.getElementById('confirmBlockBtn').dataset.subscriberId);
+    const reason = document.getElementById('blockReason').value;
+    const subscriber = subscribers.find(sub => sub.subscriber_id === subscriberId);
+    
+    // Create new block record
+    const newBlock = {
+        block_id: blockedSubscribers.length + 1,
+        subscriber_id: subscriberId,
+        blocked_reason: reason,
+        blocked_at: new Date().toISOString()
+    };
+    
+    // Add to blocked subscribers
+    blockedSubscribers.push(newBlock);
+    
+    // Update subscriber status
+    subscriber.status = 'Blocked';
+    
+    // Close modal
+    bootstrap.Modal.getInstance(document.getElementById('blockConfirmationModal')).hide();
+    
+    // Refresh relevant data
+    loadDashboardData();
+    
+    // Show success toast
+    showToast('Subscriber Blocked', `${subscriber.name} has been blocked successfully`);
+}
+
+// Delete plan (mock function)
+function deletePlan(planId) {
+    // In a real application, this would involve checking for constraints
+    // and performing the delete operation on the server
+    
+    // For demo, just show a toast
+    const plan = plans.find(p => p.plan_id == planId);
+    
+    // Show success toast
+    showToast('Plan Deleted', `Plan "${plan.plan_name}" has been deleted successfully`);
+    
+    // Refresh unused plans
+    loadUnusedPlans();
+}
+
+// Save profile changes
+function saveProfileChanges() {
+    const newName = document.getElementById('profileName').value;
+    const newEmail = document.getElementById('profileEmail').value;
+    
+    // In a real application, this would update the admin record on the server
+    admins[0].name = newName;
+    admins[0].email = newEmail;
+    
+    // Update header display
+    document.getElementById('adminName').textContent = newName;
+    
+    // Close modal
+    bootstrap.Modal.getInstance(document.getElementById('profileModal')).hide();
+    
+    // Show success toast
+    showToast('Profile Updated', 'Your profile has been updated successfully');
+}
+
+// Show toast notification
+function showToast(title, message) {
+    document.getElementById('toastTitle').textContent = title;
+    document.getElementById('toastMessage').textContent = message;
+    
+    const toast = new bootstrap.Toast(document.getElementById('actionToast'));
+    toast.show();
+}
+
+// Format date for display
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric' 
+    });
+}
+
+// Initialize Bootstrap components
+function initializeBootstrapComponents() {
+    // Initialize all tooltips
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+    
+    // Initialize all popovers
+    const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+    popoverTriggerList.map(function (popoverTriggerEl) {
+        return new bootstrap.Popover(popoverTriggerEl);
+    });
+}
+    </script>
+</body>
+</html>

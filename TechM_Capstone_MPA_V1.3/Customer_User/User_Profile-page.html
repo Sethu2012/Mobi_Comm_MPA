@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOBI-COMM Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Applying the color #476147 to relevant elements */
+        .header {
+            background-color: #fff;
+            padding: 1rem 0;
+            box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            height: 3.125rem;
+        }
+
+        .nav-link {
+            color: #495057;
+            font-size: 1.2rem;
+            padding: 0.5rem 1rem;
+            transition: color 0.3s ease;
+            text-decoration: none;
+        }
+
+        .nav-link:hover {
+            color: #476147;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #476147;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 1rem;
+        }
+
+        .footer-col h3 {
+            margin-bottom: 0.75rem;
+            font-size: 1.5rem;
+        }
+
+        .footer-col a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .social-icons a {
+            color: white;
+            margin: 0 0.5rem;
+            text-decoration: none;
+        }
+
+        .footer-bottom {
+            border-top: 0.0625rem solid rgba(255, 255, 255, 0.2);
+            padding-top: 1rem;
+        }
+
+        .footer-links a {
+            margin: 0 0.5rem;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            .footer-content {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .footer-col {
+                margin-bottom: 1rem;
+            }
+        }
+
+        .company-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .menu a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.3125rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .menu a:hover {
+            color: #476147;
+            text-decoration: underline;
+        }
+
+        .profile-icon img {
+            height: 2.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            font-size: 1.125rem;
+            /* 18px base font size */
+        }
+
+        .main-container {
+            margin-top: 1.25rem;
+            /* 20px */
+            margin-bottom: 2.5rem;
+            /* 40px */
+        }
+
+        .card {
+            box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+            border-radius: 0.625rem;
+            /* 10px */
+        }
+
+        .icon-main-container {
+            text-align: center;
+            margin-top: 0.625rem;
+            /* 10px */
+        }
+
+        .icon-link {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+
+        .icon-link:hover {
+            transform: scale(1.1);
+        }
+
+        .icon {
+            width: 2.125rem;
+            /* 50px */
+            height: 2.125rem;
+            /* 50px */
+            margin-bottom: 0.3125rem;
+            /* 5px */
+        }
+
+        .content-section {
+            margin-top: 0.9375rem;
+            /* 15px */
+            padding: 0.9375rem;
+            /* 15px */
+            border: 0.0625rem solid #ddd;
+            border-radius: 0.3125rem;
+            /* 5px */
+            display: none;
+            background-color: #ffffff;
+        }
+
+        /* Profile Dropdown Styles */
+        .profile-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 7.5rem;
+            /* 120px */
+            box-shadow: 0 0.3125rem 0.625rem rgba(0, 0, 0, 0.2);
+            /* 5px 10px */
+            padding: 0.625rem 0;
+            /* 10px 0 */
+            z-index: 1;
+            right: 0;
+            border-radius: 0.3125rem;
+            /* 5px */
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 0.75rem 1rem;
+            text-decoration: none;
+            display: block;
+            font-size: 1rem;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+        .profile-dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Profile Edit Form Styles */
+        #profileEditForm {
+            display: none;
+        }
+
+        #profileEditForm .form-group {
+            margin-bottom: 1rem;
+        }
+
+        #profileEditForm label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        #profileEditForm input[type="text"],
+        #profileEditForm input[type="email"],
+        #profileEditForm textarea {
+            width: 100%;
+            padding: 0.5rem;
+            border: 0.0625rem solid #ccc;
+            border-radius: 0.25rem;
+            font-size: 1rem;
+        }
+
+        #profileEditForm .profile-picture-container {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        #profileEditForm .profile-picture {
+            width: 5rem;
+            height: 5rem;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .table {
+            font-size: 1rem;
+        }
+
+        .custom-bg {
+    background-color: #476147 !important;
+    border-color: #476147 !important;
+}
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <img src="Logo-removebg-preview.png" alt="Mobi-Comm Logo" class="logo">
+            </div>
+            <nav class="nav">
+                <a href="User_Profile-page.html" class="nav-link text-dark">Home</a>
+                <a href="Plans_Page.html" class="nav-link text-dark">Plans</a>
+                <a href="Plans_Page.html" class="nav-link text-dark">Recharge</a>
+                <a href="#" class="nav-link text-dark">Support</a>
+                <a href="#" class="nav-link text-dark">Contact US</a>
+            </nav>
+            <div class="profile-dropdown">
+                <img src="profile-user.png" alt="Profile Icon" class="profile-icon img rounded-circle" height="40">
+                <div class="dropdown-content">
+                    <a href="#" onclick="showProfileForm()">Profile</a>
+                    <a href="#" onclick="logout()">Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="main-container">
+        <div class="row">
+            <div class="col-md-4 offset-md-4">
+                <!-- User Dashboard Content -->
+                <div id="userDashboard">
+                    <div class="alert alert-success">
+                        <h4>Welcome, <span id="userName"></span>!</h4>
+                        <p>Your account and plan details are below.</p>
+                    </div>
+                    <br>
+                    <h5 class="card-title"><strong>Current Plan</strong></h5>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Plan name:<span id="currentPlanName"></span></h5>
+                            <p>Price: <span id="currentPlanPrice"></span></p>
+                            <a href="#" class="btn btn-primary custom-bg">Check Details</a>
+                        </div>
+                    </div>
+                    <br>
+                    <h5 class="card-title"><strong>Plan Validity</strong></h5>
+                
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <p>Data Remaining: <span id="dataRemaining"></span></p>
+                            <p>Expires in <span id="expiresIn"></span> days</p>
+                            <a id="addDataButton" href="#" class="btn btn-primary custom-bg">Add Data</a>
+                        </div>
+                    </div>
+                    <br>
+                    <h5 class="card-title"><strong>My Account Details</strong></h5>
+                 
+                    <div class="card" id="accountDetailsCard">
+                        <div class="card-body text-center">
+                            <div class="d-flex justify-content-around icon-container">
+                                <a href="#" class="icon-link" data-target="myPlans">
+                                    <img src="list-check.png" alt="My Plans" class="icon">
+                                    <p>My Plans</p>
+                                </a>
+                                <a href="#" class="icon-link" data-target="transactionHistory">
+                                    <img src="time-past.png" alt="Transaction History" class="icon">
+                                    <p>History</p>
+                                </a>
+                                <a href="#" class="icon-link" data-target="invoice">
+                                    <img src="file-invoice.png" alt="Invoice" class="icon">
+                                    <p>Invoice</p>
+                                </a>
+                            </div>
+                            <div id="myPlans" class="content-section">
+                                <h6>My Plans</h6>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Plan</th>
+                                            <th>Price</th>
+                                            <th>Validity</th>
+                                            <th>Data</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="myPlansTableBody"></tbody>
+                                </table>
+                            </div>
+                            <div id="transactionHistory" class="content-section">
+                                <h6>Transaction History</h6>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Plan</th>
+                                            <th>Price</th>
+                                            <th>Method</th>
+                                            <th>Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="transactionHistoryTableBody"></tbody>
+                                </table>
+                            </div>
+                            <div id="invoice" class="content-section">
+                                <h6>Invoice</h6>
+                                <div id="invoiceTemplate"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <!-- Profile Edit Form -->
+                <div class="card" id="profileEditForm">
+                    <div class="card-body">
+                        <div class="profile-picture-container">
+                            <img src="profile-user.png" alt="Profile Picture" class="profile-picture">
+                        </div>
+                        <form id="editForm">
+                            <div class="form-group">
+                                <label for="name">Name:</label>
+                                <input type="text" id="name" name="name">
+                            </div>
+                            <div class="form-group">
+                                <label for="mobile">Mobile Number:</label>
+                                <input type="text" id="mobile" name="mobile" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="alternateMobile">Alternate Mobile Number:</label>
+                                <input type="text" id="alternateMobile" name="alternateMobile">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email Address:</label>
+                                <input type="email" id="email" name="email">
+                            </div>
+                            <div class="form-group">
+                                <label for="address">Address:</label>
+                                <textarea id="address" name="address"></textarea>
+                            </div>
+                            <button type="button" class="btn btn-primary" onclick="saveProfile()">Save</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer from Plans_Page.html -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="footer-content">
+                        <div class="footer-col">
+                            <h3>Product</h3>
+                            <a href="#">Landing Page</a>
+                            <a href="#">Popup Builder</a>
+                            <a href="#">Web-design</a>
+                            <a href="#">Content</a>
+                            <a href="#">Integrations</a>
+                        </div>
+                        <div class="footer-col">
+                            <h3>Use Cases</h3>
+                            <a href="#">Web-designers</a>
+                            <a href="#">Marketers</a>
+                            <a href="#">Small Business</a>
+                            <a href="#">Website Builder</a>
+                        </div>
+                        <div class="footer-col">
+                            <h3>Resources</h3>
+                            <a href="#">Academy</a>
+                            <a href="#">Blog</a>
+                            <a href="#">Themes</a>
+                            <a href="#">Hosting</a>
+                            <a href="#">Developers</a>
+                            <a href="#">Support</a>
+                        </div>
+                        <div class="footer-col">
+                            <h3>Company</h3>
+                            <a href="#">About Us</a>
+                            <a href="#">Careers</a>
+                            <a href="#">FAQs</a>
+                            <a href="#">Teams</a>
+                            <a href="#">Contact Us</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="footer-bottom">
+                        <p>© 2025 All Rights Reserved</p>
+                        <div class="footer-links">
+                            <a href="#">Privacy Policy</a>
+                            <a href="#">Terms of Use</a>
+                            <a href="#">Sales and Refunds</a>
+                            <a href="#">Legal</a>
+                            <a href="#">Site Map</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+       document.addEventListener("DOMContentLoaded", function () {
+    const userData = JSON.parse(localStorage.getItem('userData'));
+
+    if (userData) {
+        // Populate user details
+        document.getElementById('userName').textContent = userData.Name;
+        document.getElementById('currentPlanName').textContent = userData["current plan"]["plan name"];
+        document.getElementById('currentPlanPrice').textContent = userData["current plan"]["plan price"];
+        document.getElementById('dataRemaining').textContent = `0.5GB out of ${userData["current plan"].data}`;
+
+        // Expiration date calculation
+        const validityDays = parseInt(userData["current plan"].validity);
+        const rechargedDate = new Date(userData["Transaction history"][0]["recharged date and time"]);
+        const expirationDate = new Date(rechargedDate);
+        expirationDate.setDate(rechargedDate.getDate() + validityDays);
+        const daysRemaining = Math.ceil((expirationDate - new Date()) / (1000 * 3600 * 24));
+        document.getElementById('expiresIn').textContent = daysRemaining > 0 ? daysRemaining : "Expired";
+
+        // Populate My Plans Table
+        document.getElementById('myPlansTableBody').innerHTML = `
+            <tr>
+                <td>${userData["current plan"]["plan name"]}</td>
+                <td>${userData["current plan"]["plan price"]}</td>
+                <td>${userData["current plan"].validity}</td>
+                <td>${userData["current plan"].data}</td>
+            </tr>
+        `;
+
+        // Populate Transaction History Table
+        const transactionTableBody = document.getElementById('transactionHistoryTableBody');
+        transactionTableBody.innerHTML = ""; // Clear existing content
+        userData["Transaction history"].forEach(transaction => {
+            transactionTableBody.innerHTML += `
+                <tr>
+                    <td>${transaction["plan name"]}</td>
+                    <td>${transaction["plan price"]}</td>
+                    <td>${transaction["payment method"]}</td>
+                    <td>${transaction["recharged date and time"]}</td>
+                </tr>
+            `;
+        });
+
+        // Fix invoice section (use latest transaction)
+        if (userData["Transaction history"].length > 0) {
+            const latestTransaction = userData["Transaction history"][0];
+            const invoiceTemplate = `
+                <p><strong>Plan Name:</strong> ${latestTransaction["plan name"]}</p>
+                <p><strong>Price:</strong> ${latestTransaction["plan price"]}</p>
+                <p><strong>Payment Method:</strong> ${latestTransaction["payment method"]}</p>
+                <p><strong>Recharged Date:</strong> ${latestTransaction["recharged date and time"]}</p>
+                <p><strong>Transaction ID:</strong> ${latestTransaction["transaction ID"]}</p>
+                <p>Thank you for your recharge!</p>
+            `;
+            document.getElementById('invoiceTemplate').innerHTML = invoiceTemplate;
+        }
+
+        // Populate profile form with user details
+        document.getElementById('name').value = userData.Name;
+        document.getElementById('mobile').value = userData["Mobile number"];
+        document.getElementById('alternateMobile').value = userData["Alternate mobile number"] || '';
+        document.getElementById('email').value = userData["email address"] || '';
+        document.getElementById('address').value = userData.address || '';
+    }
+
+    // Toggle content sections on icon click
+    document.querySelectorAll('.icon-link').forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetSection = document.getElementById(this.dataset.target);
+            const isVisible = targetSection.style.display === 'block';
+
+            // Hide all sections first
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.style.display = 'none';
+            });
+
+            // Toggle visibility of the clicked section
+            targetSection.style.display = isVisible ? 'none' : 'block';
+        });
+    });
+});
+
+// Show profile edit form
+function showProfileForm() {
+    document.getElementById('userDashboard').style.display = 'none';
+    document.getElementById('profileEditForm').style.display = 'block';
+}
+
+// Save updated profile data
+function saveProfile() {
+    const name = document.getElementById('name').value;
+    const alternateMobile = document.getElementById('alternateMobile').value;
+    const email = document.getElementById('email').value;
+    const address = document.getElementById('address').value;
+
+    // Update local storage
+    let userData = JSON.parse(localStorage.getItem('userData'));
+    if (userData) {
+        userData.Name = name;
+        userData["Alternate mobile number"] = alternateMobile;
+        userData["email address"] = email;
+        userData.address = address;
+        localStorage.setItem('userData', JSON.stringify(userData));
+    }
+
+    // Update displayed name
+    document.getElementById('userName').textContent = name;
+
+    // Hide form and show dashboard
+    document.getElementById('profileEditForm').style.display = 'none';
+    document.getElementById('userDashboard').style.display = 'block';
+
+    alert('Profile updated successfully!');
+}
+
+// Logout function
+function logout() {
+    if (confirm('Are you sure you want to logout?')) {
+        localStorage.removeItem('userData');
+        window.location.href = 'Home.html';
+    }
+}
+document.addEventListener("DOMContentLoaded", function () {
+    // Retrieve user data from localStorage
+    const userData = JSON.parse(localStorage.getItem('userData'));
+
+    if (userData && userData["Mobile number"]) {
+        const mobileNumber = encodeURIComponent(userData["Mobile number"]);
+        const addDataButton = document.getElementById("addDataButton");
+
+        if (addDataButton) {
+            addDataButton.href = `Plans_Page.html?mobile=${mobileNumber}`;
+        }
+    }
+});
+
+
+    </script>
+</body>
+
+</html>
