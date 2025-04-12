@@ -31,8 +31,3 @@ build/
 
 ### VS Code ###
 .vscode/
-
-### Configuration files ###
-/src/main/resources/application.properties
-*.sample
-sensitive-data.txt
