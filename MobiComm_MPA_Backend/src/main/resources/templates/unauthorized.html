@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOBI-COMM - Unauthorized Access</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Poppins Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <!-- AOS (Animate On Scroll) Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        
+        /* Header Styles */
+        .logo {
+            height: 50px;
+        }
+        
+        .nav-link {
+            color: #343a40;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: #476147;
+            text-decoration: underline;
+        }
+        
+        /* Main Content Styles */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 400px);
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .error-container {
+            background-color: white;
+            padding: 3rem;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        .error-icon {
+            font-size: 5rem;
+            color: #476147;
+            margin-bottom: 1rem;
+        }
+        
+        .error-title {
+            font-size: 2.5rem;
+            color: #343a40;
+            margin-bottom: 1rem;
+        }
+        
+        .error-message {
+            font-size: 1.2rem;
+            color: #6c757d;
+            margin-bottom: 2rem;
+        }
+        
+        .login-btn {
+            background-color: #476147;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 500;
+        }
+        
+        .login-btn:hover {
+            background-color: #868686;
+            color: white;
+        }
+        
+        /* Footer Styles */
+        .footer {
+            background-color: #f8f9fa;
+            padding: 2rem 0;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .footer-col {
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .footer-col h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #343a40;
+        }
+        
+        .footer-col a {
+            color: #6c757d;
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-col a:hover {
+            color: #476147;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            margin: 1.5rem 0;
+        }
+        
+        .social-icons a {
+            color: #6c757d;
+            margin: 0 1rem;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+        
+        .footer-bottom {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+            border-top: 1px solid #e9ecef;
+            color: #6c757d;
+        }
+        
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: #6c757d;
+            text-decoration: none;
+            margin-left: 1.5rem;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: #476147;
+        }
+        
+        @media (max-width: 768px) {
+            .footer-content {
+                flex-direction: column;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .footer-links {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            .footer-links a {
+                margin: 0 0.75rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="bg-white shadow-sm p-3 mb-3">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <img src="Logo-removebg-preview.png" alt="Mobi-Comm Logo" class="logo" height="50">
+            </div>
+            <nav class="nav">
+                <a href="Subscriber_Home-page.html" class="nav-link text-dark">Home</a>
+                <a href="Subscriber_Login-page.html" class="nav-link text-dark">Plans</a>
+                <a href="Subscriber_Login-page.html" class="nav-link text-dark">Recharge</a>
+                <a href="#" class="nav-link text-dark">Support</a>
+                <a href="#" class="nav-link text-dark">Contact Us</a>
+            </nav>
+            <div>
+                <img src="profile-user.png" alt="Profile Icon" class="rounded-circle" height="40">
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="error-container">
+            <i class="bi bi-shield-lock error-icon"></i>
+            <h1 class="error-title">Unauthorized Access</h1>
+            <p class="error-message">You do not have permission to access this page. Please log in with appropriate credentials to continue.</p>
+            <a href="Subscriber_Login-page.html" class="login-btn">Go to Login</a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-col">
+                <h3>Services</h3>
+                <a href="#">Mobile Plans</a>
+                <a href="#">Data Packs</a>
+                <a href="#">International Roaming</a>
+                <a href="#">5G Network</a>
+                <a href="#">Broadband</a>
+            </div>
+
+            <div class="footer-col">
+                <h3>Why Mobi-Comm?</h3>
+                <a href="#">AI-Powered Network</a>
+                <a href="#">Affordable Pricing</a>
+                <a href="#">Loyalty Rewards</a>
+                <a href="#">Seamless Connectivity</a>
+            </div>
+
+            <div class="footer-col">
+                <h3>Support</h3>
+                <a href="#">Help Center</a>
+                <a href="#">FAQs</a>
+                <a href="#">Report an Issue</a>
+                <a href="#">Network Coverage</a>
+                <a href="#">Customer Care</a>
+            </div>
+
+            <div class="footer-col">
+                <h3>Company</h3>
+                <a href="#">About Us</a>
+                <a href="#">Careers</a>
+                <a href="#">Investor Relations</a>
+                <a href="#">Media & Press</a>
+                <a href="#">Contact Us</a>
+            </div>
+        </div>
+
+        <div class="social-icons">
+            <a href="#">•</a>
+            <a href="#">•</a>
+            <a href="#">•</a>
+            <a href="#">•</a>
+            <a href="#">•</a>
+        </div>
+
+        <div class="footer-bottom">
+            <span>© 2025 Mobi-Comm. All Rights Reserved</span>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Use</a>
+                <a href="#">Sales and Refunds</a>
+                <a href="#">Legal</a>
+                <a href="#">Site Map</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // Animation for error container
+        document.addEventListener('DOMContentLoaded', function() {
+            const errorContainer = document.querySelector('.error-container');
+            errorContainer.classList.add('animate__animated', 'animate__fadeIn');
+            
+            // Redirect to login page when button is clicked
+            document.querySelector('.login-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'Subscriber_Login-page.html';
+            });
+        });
+    </script>
+</body>
+
+</html>
