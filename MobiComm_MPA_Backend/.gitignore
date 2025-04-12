@@ -32,10 +32,7 @@ build/
 ### VS Code ###
 .vscode/
 
-### Environment Variables ###
-.env
-*.env
-
-### Application Properties ###
+### Configuration files ###
 /src/main/resources/application.properties
-/src/main/resources/application-*.properties
+*.sample
+sensitive-data.txt
